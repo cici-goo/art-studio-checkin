@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.layout {
   min-height: 100vh;
+}
+
+.header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: #fff !important;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0 24px;
+  height: 64px;
 }
 
-.App-link {
-  color: #61dafb;
+.logo.left {
+  height: 40px;
+  margin-right: 24px;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo.left img {
+  height: 45px;
+  object-fit: contain;
+  transform: scale(1.3);
 }
+
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.nav-menu {
+  flex: 0 1 auto;
+  border-bottom: none;
+  background: transparent;
+  margin-right: auto;
+}
+
+.nav-menu .ant-menu-item {
+  color: #595959;
+  font-size: 16px;
+}
+
+.nav-menu .ant-menu-item:hover {
+  color: #eb86e1;
+}
+
+.nav-menu .ant-menu-item-selected {
+  color: #eb86e1;
+  font-weight: 500;
+}
+
+.content {
+  padding: 24px;
+  background: #fff;
+  margin: 24px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 24px;
+}
+
+.ant-table-wrapper {
+  background: #fff;
+  border-radius: 6px;
+}
+
+/* 添加其他粉色相关样式 */
+.ant-btn-primary {
+  background-color: #eb86e1;
+}
+
+.ant-btn-primary:hover {
+  background-color: #f3a6ec !important;
+}
+
+.ant-pagination-item-active {
+  border-color: #eb86e1 !important;
+}
+
+.ant-pagination-item-active a {
+  color: #eb86e1 !important;
+}
+
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-part {
+  height: 40px;
+  object-fit: contain;
+}
+
+.logo-part:nth-child(1) {
+  height: 45px;
+  transform: scale(1.3);
+  margin-right: 24px;
+}
+
+.logo-part:nth-child(2) {
+  height: 45px;
+  transform: scale(1.2);
+}
+
+.logo-part:nth-child(3) {
+  height: 40px;
+} 
