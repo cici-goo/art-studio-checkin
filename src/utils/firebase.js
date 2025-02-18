@@ -2,8 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  // 把 Firebase 给您的配置粘贴在这里
-  apiKey: "AIzaSyAxohOjX_5GS9goiwOh1iHepny2wUZtcpk",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "art-studio-checkin.firebaseapp.com",
   projectId: "art-studio-checkin",
   storageBucket: "art-studio-checkin.firebasestorage.app",
