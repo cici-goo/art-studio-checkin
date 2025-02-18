@@ -11,10 +11,20 @@ function ClassManagement() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    setClassTypes(getClassTypes());
+    async function loadClassTypes() {
+      try {
+        const types = await getClassTypes();
+        if (types && types.length > 0) {
+          setClassTypes(types);
+        }
+      } catch (error) {
+        console.error('Error loading class types:', error);
+      }
+    }
+    loadClassTypes();
   }, []);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     let newTypes;
     if (editingClass) {
       newTypes = classTypes.map(type => 
@@ -24,18 +34,18 @@ function ClassManagement() {
       newTypes = [...classTypes, values.type];
     }
     
+    await saveClassTypes(newTypes);
     setClassTypes(newTypes);
-    saveClassTypes(newTypes);
     setIsModalVisible(false);
     form.resetFields();
     setEditingClass(null);
     message.success(`${editingClass ? '编辑' : '添加'}班级成功！`);
   };
 
-  const handleDelete = (type) => {
+  const handleDelete = async (type) => {
     const newTypes = classTypes.filter(t => t !== type);
+    await saveClassTypes(newTypes);
     setClassTypes(newTypes);
-    saveClassTypes(newTypes);
     message.success('删除班级成功！');
   };
 

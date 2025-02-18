@@ -1,30 +1,54 @@
-export const saveStudents = (students) => {
-  // 确保每个学生都有 records 数组
-  const studentsWithRecords = students.map(student => ({
-    ...student,
-    records: student.records || []
-  }));
-  localStorage.setItem('students', JSON.stringify(studentsWithRecords));
+import { db } from './firebase';
+import { getDoc, setDoc, doc } from 'firebase/firestore';
+
+// 保存学生数据
+export const saveStudents = async (students) => {
+  try {
+    const studentsRef = doc(db, 'data', 'students');
+    await setDoc(studentsRef, { students });
+  } catch (error) {
+    console.error('Error saving students:', error);
+  }
 };
 
-export const getStudents = () => {
-  const students = localStorage.getItem('students');
-  return students ? JSON.parse(students) : [];
+// 获取学生数据
+export const getStudents = async () => {
+  try {
+    const studentsRef = doc(db, 'data', 'students');
+    const docSnap = await getDoc(studentsRef);
+    return docSnap.exists() ? docSnap.data().students : [];
+  } catch (error) {
+    console.error('Error getting students:', error);
+    return [];
+  }
 };
 
-export const saveClassTypes = (types) => {
-  localStorage.setItem('classTypes', JSON.stringify(types));
+// 保存班级类型
+export const saveClassTypes = async (types) => {
+  try {
+    const classTypesRef = doc(db, 'data', 'classTypes');
+    await setDoc(classTypesRef, { types });
+  } catch (error) {
+    console.error('Error saving class types:', error);
+  }
 };
 
-export const getClassTypes = () => {
-  const types = localStorage.getItem('classTypes');
-  return types ? JSON.parse(types) : ['A', 'B', 'C', 'D'];
+// 获取班级类型
+export const getClassTypes = async () => {
+  try {
+    const classTypesRef = doc(db, 'data', 'classTypes');
+    const docSnap = await getDoc(classTypesRef);
+    return docSnap.exists() ? docSnap.data().types : ['A', 'B', 'C', 'D'];
+  } catch (error) {
+    console.error('Error getting class types:', error);
+    return ['A', 'B', 'C', 'D'];
+  }
 };
 
-// 添加新的函数来处理课时变动
+// 添加课时记录
 export const addLessonRecord = (student, change, note) => {
   const currentLessons = student.lessons || 0;
-  const newLessons = currentLessons + change;
+  const newLessons = Math.max(0, currentLessons + change);
   const now = new Date().toISOString();
   
   const newRecord = {
@@ -38,7 +62,7 @@ export const addLessonRecord = (student, change, note) => {
   return {
     ...student,
     lessons: newLessons,
-    lastCheckin: change < 0 ? now : student.lastCheckin, // 只在打卡（减少课时）时更新最后打卡时间
+    lastCheckin: change < 0 ? now : student.lastCheckin,
     records: [...(student.records || []), newRecord]
   };
 }; 

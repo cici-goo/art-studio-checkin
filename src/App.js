@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, App as AntApp, ConfigProvider } from 'antd';
 import StudentManagement from './components/StudentManagement';
 import ClassManagement from './components/ClassManagement';
@@ -7,11 +7,21 @@ import './App.css';
 import logoIcon from './assets/logo-icon.png';
 import logoText1 from './assets/logo-text1.png';
 import logoText2 from './assets/logo-text2.png';
+import { getClassTypes } from './utils/storage';
 
 const { Header, Content } = Layout;
 
 function App() {
   const [currentTab, setCurrentTab] = useState('1');
+  const [classTypes, setClassTypes] = useState([]);
+
+  useEffect(() => {
+    async function loadClassTypes() {
+      const types = await getClassTypes();
+      setClassTypes(types);
+    }
+    loadClassTypes();
+  }, []);
 
   return (
     <ConfigProvider
@@ -52,7 +62,7 @@ function App() {
             </div>
           </Header>
           <Content className="content">
-            {currentTab === '1' ? <StudentManagement /> : <ClassManagement />}
+            {currentTab === '1' ? <StudentManagement classTypes={classTypes} /> : <ClassManagement />}
           </Content>
         </Layout>
       </AntApp>

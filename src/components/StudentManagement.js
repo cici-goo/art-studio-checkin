@@ -2,27 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Input, Space, Modal, Form, Select, Popconfirm, Tabs, InputNumber, Divider, App } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
-import { saveStudents, getStudents, getClassTypes, addLessonRecord } from '../utils/storage';
+import { saveStudents, getStudents, addLessonRecord } from '../utils/storage';
 
 const { Search } = Input;
 
-function StudentManagement() {
+function StudentManagement({ classTypes }) {
   const { message } = App.useApp();
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [form] = Form.useForm();
-  const [classTypes] = useState(getClassTypes());
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [recordModalVisible, setRecordModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
-    const savedStudents = getStudents();
-    setStudents(savedStudents);
-    setFilteredStudents(savedStudents);
-  }, []);
+    // 修改为异步加载
+    async function loadData() {
+      try {
+        const savedStudents = await getStudents();
+        if (savedStudents && savedStudents.length > 0) {  // 添加检查
+          setStudents(savedStudents);
+          setFilteredStudents(savedStudents);
+        }
+      } catch (error) {
+        console.error('Error loading students:', error);
+      }
+    }
+    loadData();
+  }, []); // 依赖数组保持空
 
   const handleSearch = (value) => {
     const filtered = students.filter(student => 
@@ -32,19 +41,16 @@ function StudentManagement() {
     setFilteredStudents(filtered);
   };
 
-  const handleCheckin = (studentId) => {
-    // 1. 找到学生
+  const handleCheckin = async (studentId) => {
     const student = students.find(s => s.studentId === studentId);
     if (!student) return;
 
-    // 2. 检查课时数
     const currentLessons = student.lessons || 0;
     if (currentLessons <= 0) {
       message.error('打卡失败，课时数不足');
       return;
     }
 
-    // 3. 更新学生数据
     const newStudents = students.map(s => {
       if (s.studentId === studentId) {
         return addLessonRecord(s, -1, '课程打卡');
@@ -52,12 +58,10 @@ function StudentManagement() {
       return s;
     });
 
-    // 4. 更新状态
+    // 异步保存
+    await saveStudents(newStudents);
     setStudents(newStudents);
     setFilteredStudents(newStudents);
-    saveStudents(newStudents);
-
-    // 5. 显示成功通知
     message.success('打卡成功');
   };
 
@@ -106,9 +110,10 @@ function StudentManagement() {
       newStudents = [...students, updatedStudent];
     }
 
+    // 异步保存
+    await saveStudents(newStudents);
     setStudents(newStudents);
     setFilteredStudents(newStudents);
-    saveStudents(newStudents);
     setIsModalVisible(false);
     form.resetFields();
     setEditingStudent(null);
@@ -121,11 +126,12 @@ function StudentManagement() {
     setIsModalVisible(true);
   };
 
-  const handleDelete = (studentId) => {
+  const handleDelete = async (studentId) => {
     const newStudents = students.filter(student => student.studentId !== studentId);
+    // 异步保存
+    await saveStudents(newStudents);
     setStudents(newStudents);
     setFilteredStudents(newStudents);
-    saveStudents(newStudents);
     message.success('删除成功！');
   };
 
