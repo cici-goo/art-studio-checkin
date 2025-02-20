@@ -6,10 +6,9 @@ import { saveStudents, getStudents, addLessonRecord } from '../utils/storage';
 
 const { Search } = Input;
 
-function StudentManagement({ classTypes }) {
+function StudentManagement({ classTypes, students, onStudentsUpdate }) {
   const { message } = App.useApp();
-  const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState(students || []);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [form] = Form.useForm();
@@ -18,20 +17,8 @@ function StudentManagement({ classTypes }) {
   const [activeTab, setActiveTab] = useState('all');
 
   useEffect(() => {
-    // 修改为异步加载
-    async function loadData() {
-      try {
-        const savedStudents = await getStudents();
-        if (savedStudents && savedStudents.length > 0) {  // 添加检查
-          setStudents(savedStudents);
-          setFilteredStudents(savedStudents);
-        }
-      } catch (error) {
-        console.error('Error loading students:', error);
-      }
-    }
-    loadData();
-  }, []); // 依赖数组保持空
+    setFilteredStudents(students || []);
+  }, [students]);
 
   const handleSearch = (value) => {
     const filtered = students.filter(student => 
@@ -60,8 +47,7 @@ function StudentManagement({ classTypes }) {
 
     // 异步保存
     await saveStudents(newStudents);
-    setStudents(newStudents);
-    setFilteredStudents(newStudents);
+    onStudentsUpdate();  // 通知父组件更新学生列表
     message.success('打卡成功');
   };
 
@@ -111,13 +97,17 @@ function StudentManagement({ classTypes }) {
     }
 
     // 异步保存
-    await saveStudents(newStudents);
-    setStudents(newStudents);
-    setFilteredStudents(newStudents);
-    setIsModalVisible(false);
-    form.resetFields();
-    setEditingStudent(null);
-    message.success(`${editingStudent ? '编辑' : '添加'}学生成功！`);
+    try {
+      await saveStudents(newStudents);
+      await onStudentsUpdate();  // 等待更新完成
+      setIsModalVisible(false);
+      form.resetFields();
+      setEditingStudent(null);
+      message.success(`${editingStudent ? '编辑' : '添加'}学生成功！`);
+    } catch (error) {
+      console.error('Error saving student:', error);
+      message.error('保存失败，请重试');
+    }
   };
 
   const handleEdit = (record) => {
@@ -130,8 +120,7 @@ function StudentManagement({ classTypes }) {
     const newStudents = students.filter(student => student.studentId !== studentId);
     // 异步保存
     await saveStudents(newStudents);
-    setStudents(newStudents);
-    setFilteredStudents(newStudents);
+    onStudentsUpdate();  // 通知父组件更新学生列表
     message.success('删除成功！');
   };
 

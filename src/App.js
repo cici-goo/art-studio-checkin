@@ -7,20 +7,28 @@ import './App.css';
 import logoIcon from './assets/logo-icon.png';
 import logoText1 from './assets/logo-text1.png';
 import logoText2 from './assets/logo-text2.png';
-import { getClassTypes } from './utils/storage';
+import { getClassTypes, getStudents } from './utils/storage';
 
 const { Header, Content } = Layout;
 
 function App() {
   const [currentTab, setCurrentTab] = useState('1');
   const [classTypes, setClassTypes] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  const refreshClassTypes = async () => {
+    const types = await getClassTypes();
+    setClassTypes(types);
+  };
+
+  const refreshStudents = async () => {
+    const savedStudents = await getStudents();
+    setStudents(savedStudents);
+  };
 
   useEffect(() => {
-    async function loadClassTypes() {
-      const types = await getClassTypes();
-      setClassTypes(types);
-    }
-    loadClassTypes();
+    refreshClassTypes();
+    refreshStudents();
   }, []);
 
   return (
@@ -62,7 +70,13 @@ function App() {
             </div>
           </Header>
           <Content className="content">
-            {currentTab === '1' ? <StudentManagement classTypes={classTypes} /> : <ClassManagement />}
+            {currentTab === '1' ? 
+              <StudentManagement 
+                classTypes={classTypes} 
+                students={students}
+                onStudentsUpdate={refreshStudents}
+              /> : 
+              <ClassManagement onClassTypesUpdate={refreshClassTypes} />}
           </Content>
         </Layout>
       </AntApp>

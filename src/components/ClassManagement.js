@@ -3,7 +3,7 @@ import { Table, Button, Input, Space, Modal, Form, Popconfirm, App } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { saveClassTypes, getClassTypes } from '../utils/storage';
 
-function ClassManagement() {
+function ClassManagement({ onClassTypesUpdate }) {
   const { message } = App.useApp();
   const [classTypes, setClassTypes] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -40,6 +40,9 @@ function ClassManagement() {
     form.resetFields();
     setEditingClass(null);
     message.success(`${editingClass ? '编辑' : '添加'}班级成功！`);
+    
+    // 通知父组件更新班级列表
+    onClassTypesUpdate();
   };
 
   const handleDelete = async (type) => {
@@ -47,6 +50,9 @@ function ClassManagement() {
     await saveClassTypes(newTypes);
     setClassTypes(newTypes);
     message.success('删除班级成功！');
+    
+    // 通知父组件更新班级列表
+    onClassTypesUpdate();
   };
 
   const columns = [
