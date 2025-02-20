@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/art-studio-checkin/static/css/main.15d13ec2.css",
-    "main.js": "/art-studio-checkin/static/js/main.909a257f.js",
+    "main.js": "/art-studio-checkin/static/js/main.ff3880a4.js",
     "static/js/453.23682b52.chunk.js": "/art-studio-checkin/static/js/453.23682b52.chunk.js",
     "static/media/logo-text1.png": "/art-studio-checkin/static/media/logo-text1.aee515a91edf363401d7.png",
     "static/media/logo-icon.png": "/art-studio-checkin/static/media/logo-icon.e095d14f4a3b4c5ed289.png",
     "static/media/logo-text2.png": "/art-studio-checkin/static/media/logo-text2.b0302eb6cbf1a1ab096f.png",
     "index.html": "/art-studio-checkin/index.html",
     "main.15d13ec2.css.map": "/art-studio-checkin/static/css/main.15d13ec2.css.map",
-    "main.909a257f.js.map": "/art-studio-checkin/static/js/main.909a257f.js.map",
+    "main.ff3880a4.js.map": "/art-studio-checkin/static/js/main.ff3880a4.js.map",
     "453.23682b52.chunk.js.map": "/art-studio-checkin/static/js/453.23682b52.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.15d13ec2.css",
-    "static/js/main.909a257f.js"
+    "static/js/main.ff3880a4.js"
   ]
 }
