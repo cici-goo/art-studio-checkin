@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Input, Space, Modal, Form, Select, Popconfirm, Tabs, InputNumber, Divider, App } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 import * as XLSX from 'xlsx';
-import { saveStudents, getStudents, addLessonRecord } from '../utils/storage';
+import { saveStudents, addLessonRecord } from '../utils/storage';
 
 const { Search } = Input;
 
