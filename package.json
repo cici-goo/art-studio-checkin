@@ -2,29 +2,26 @@
   "name": "art-studio-checkin",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cici-goo.github.io/art-studio-checkin",
+  "homepage": ".",
   "dependencies": {
     "@ant-design/icons": "^5.6.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.24.1",
-    "firebase": "^11.3.1",
-    "leancloud-storage": "^4.15.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "leancloud-storage": "^4.15.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +42,5 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.3.0"
   }
-}
+} 
