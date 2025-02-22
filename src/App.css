@@ -1,19 +1,24 @@
 .layout {
   min-height: 100vh;
+  width: 100%;
 }
 
 .header {
   display: flex;
   align-items: center;
-  background: #fff !important;
+  justify-content: center;
+  background: #fff;
   border-bottom: 1px solid #f0f0f0;
   padding: 0 24px;
   height: 64px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 32px;
 }
 
 .logo.left {
   height: 40px;
-  margin-right: 24px;
   display: flex;
   align-items: center;
 }
@@ -33,7 +38,6 @@
   flex: 0 1 auto;
   border-bottom: none;
   background: transparent;
-  margin-right: auto;
 }
 
 .nav-menu .ant-menu-item {
@@ -53,9 +57,11 @@
 .content {
   padding: 24px;
   background: #fff;
-  margin: 24px;
+  margin: 24px auto;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 900px;
+  width: 100%;
 }
 
 .page-title {
@@ -90,7 +96,7 @@
 .logo-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 32px;
 }
 
 .logo-part {
@@ -101,7 +107,6 @@
 .logo-part:nth-child(1) {
   height: 45px;
   transform: scale(1.3);
-  margin-right: 24px;
 }
 
 .logo-part:nth-child(2) {
@@ -110,5 +115,38 @@
 }
 
 .logo-part:nth-child(3) {
-  height: 40px;
+  height: 45px;
+  transform: scale(1.3);
+}
+
+/* 为 List 组件添加新样式 */
+.ant-list {
+  background: #fff;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.ant-list-bordered {
+  width: 100%;
+}
+
+.ant-list-item {
+  padding: 12px 24px !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 调整表格列的宽度 */
+.ant-table {
+  table-layout: fixed;
+}
+
+.ant-table-thead > tr > th:first-child,
+.ant-table-tbody > tr > td:first-child {
+  padding-left: 24px;
+}
+
+.ant-table-thead > tr > th:last-child,
+.ant-table-tbody > tr > td:last-child {
+  padding-right: 24px;
 } 

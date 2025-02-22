@@ -187,9 +187,7 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
       title: '课时数',
       dataIndex: 'records',
       key: 'lessons',
-      render: (records = [], record) => {
-        return Math.max(0, record.lessons || 0);
-      },
+      render: (records = [], record) => Math.max(0, record.lessons || 0),
     },
     {
       title: '班级类型',
@@ -240,7 +238,11 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
 
   return (
     <div>
-      <Space style={{ marginBottom: 16 }}>
+      <Space 
+        style={{ 
+          marginBottom: 16,
+        }}
+      >
         <Button 
           type="primary" 
           icon={<PlusOutlined />}
@@ -255,7 +257,7 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
         <Search
           placeholder="搜索学生姓名或学号"
           allowClear
-          style={{ width: 300 }}
+          style={{ width: 200 }}
           onSearch={handleSearch}
         />
         <Button 
@@ -309,6 +311,9 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
             label="姓名" 
             name="name" 
             rules={[{ required: true, message: '请输入姓名' }]}
+            style={{ 
+              width: '200px'
+            }}
           >
             <Input />
           </Form.Item>
@@ -354,15 +359,24 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
             <InputNumber min={0} precision={0} />
           </Form.Item>
           <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit">
+            <Space style={{ 
+              display: 'flex',
+              justifyContent: 'flex-start',
+              width: '100%'
+            }}>
+              <Button 
+                type="primary" 
+                htmlType="submit"
+              >
                 确定
               </Button>
-              <Button onClick={() => {
-                setIsModalVisible(false);
-                form.resetFields();
-                setEditingStudent(null);
-              }}>
+              <Button 
+                onClick={() => {
+                  setIsModalVisible(false);
+                  form.resetFields();
+                  setEditingStudent(null);
+                }}
+              >
                 取消
               </Button>
             </Space>
@@ -375,10 +389,19 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
         open={recordModalVisible}
         onCancel={() => setRecordModalVisible(false)}
         footer={[
-          <Button key="export" onClick={() => exportPersonalRecord(selectedStudent)}>
+          <Button 
+            key="export"
+            onClick={() => exportPersonalRecord(selectedStudent)}
+            style={{ 
+              marginBottom: 0
+            }}
+          >
             导出记录
           </Button>,
-          <Button key="close" onClick={() => setRecordModalVisible(false)}>
+          <Button 
+            key="close"
+            onClick={() => setRecordModalVisible(false)}
+          >
             关闭
           </Button>
         ]}
@@ -390,13 +413,13 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
               title: '时间',
               dataIndex: 'time',
               key: 'time',
-              render: (time) => new Date(time).toLocaleString()
+              render: time => new Date(time).toLocaleString(),
             },
             {
               title: '变动',
               dataIndex: 'change',
               key: 'change',
-              render: (change) => change > 0 ? `+${change}` : change
+              render: change => change > 0 ? `+${change}` : change,
             },
             {
               title: '剩余课时',
@@ -409,7 +432,6 @@ function StudentManagement({ classTypes, students, onStudentsUpdate }) {
               key: 'note'
             }
           ]}
-          pagination={false}
         />
       </Modal>
     </div>

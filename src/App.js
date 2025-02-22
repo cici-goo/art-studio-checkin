@@ -44,6 +44,7 @@ function App() {
           colorLinkHover: '#f3a6ec',
           colorPrimaryHover: '#f3a6ec',
           colorPrimaryActive: '#d665cc',
+          fontSize: 14,
         },
       }}
     >
@@ -64,9 +65,9 @@ function App() {
               ]}
             />
             <div className="logo-group">
-              <img src={logoIcon} alt="logo icon" className="logo-part" />
               <img src={logoText1} alt="logo text 1" className="logo-part" />
               <img src={logoText2} alt="logo text 2" className="logo-part" />
+              <img src={logoIcon} alt="logo icon" className="logo-part" />
             </div>
           </Header>
           <Content className="content">
