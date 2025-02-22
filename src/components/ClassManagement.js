@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Input, Space, Modal, Form, Popconfirm, App, List } from 'antd';
+import { Button, Input, Space, Modal, Form, Popconfirm, App, List } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { saveClassTypes, getClassTypes } from '../utils/storage';
 
